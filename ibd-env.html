@@ -1,0 +1,88 @@
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="main.css">
+  <title>摩登前端开发者</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+
+<body><div><div>
+
+<header>
+  <div class="post-nav clearfix">
+    <ul class="container clearfix">
+      <li><a href="/" class="nav">网站首页</a></li>
+      <li><a href="/p/index" class="nav">课程首页</a></li>
+      <li><a href="/p/stage1" class="nav">S1</a></li>
+    </ul>
+  </div>
+</header>
+
+<div class="container"><span><h1 id="-react-hot-boilerplate-">快速跑起来 react-hot-boilerplate 项目</h1>
+<p>先来演示一下最终达成的效果，然后细说搭建步骤：</p>
+<p>第一步，克隆代码</p>
+<pre><code class="lang-sh">git clone git@github.com:gaearon/react-hot-boilerplate.git
+</code></pre>
+<p>第二步，安装依赖包</p>
+<pre><code class="lang-sh">npm install
+</code></pre>
+<p>第三步，执行</p>
+<pre><code class="lang-sh">npm start
+</code></pre>
+<p>页面就可以打开了，而且试着编辑一下页面，页面可以自动更新，而且不会整页刷新，所以不会闪。</p>
+<h3 id="-sass">添加 sass</h3>
+<p>对 Peter 来说，总重要的就是缺少 sass 支持，这个其实添加起来是非常容易的:</p>
+<pre><code class="lang-sh">npm i style-loader css-loader sass-loader autoprefixer-loader --save-dev
+</code></pre>
+<p>然后打开 webpack.config.js ，添加一个 loader 进来</p>
+<pre><code class="lang-js">      {
+        test: /\.scss$/,
+        loader: &#39;style!css!autoprefixer!sass&#39;
+      }
+</code></pre>
+<p>这样，就可以来添加 main.scss 文件，然后在 index.js 来使用</p>
+<pre><code class="lang-js">require(&quot;./main.scss&quot;);
+</code></pre>
+<p>这样 require 进来了。这样，就可以用 react 来组织 js/html 的结构，用 sass 自己的 import 功能来模块化组成 css 内容，功能是很强的。</p>
+<h3 id="-">导出和部署</h3>
+<p>把已有的 webpack.config.js 的内容稍微修改一下，如下</p>
+<pre><code>var path = require(&#39;path&#39;);
+var webpack = require(&#39;webpack&#39;);
+
+module.exports = {
+  devtool: &#39;eval&#39;,
+  entry: [
+    &#39;./src/index&#39;
+  ],
+  output: {
+    path: path.join(__dirname, &#39;dist&#39;),
+    filename: &#39;bundle.js&#39;
+  },
+  module: {
+    loaders: [
+    { test: /\.js$/, loaders: [&#39;react-hot&#39;, &#39;babel&#39;], include: path.join(__dirname, &#39;src&#39;)},
+    { test: /\.scss$/, loader: &#39;style!css!autoprefixer!sass&#39; }
+    ]
+  }
+};
+</code></pre><p>保存成文件 webpack.production.js 这样执行</p>
+<pre><code>mkdir dist # 新建一个 dist 文件夹
+webpack --config webpack.produciton.js
+</code></pre><p>就可以得到输出 bundle.js 了。还需要一个简单的 index.html 来跟他配套：</p>
+<pre><code class="lang-html">  &lt;html&gt;
+    &lt;head&gt;
+      &lt;title&gt;App&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+      &lt;div id=&#39;root&#39;&gt;
+      &lt;/div&gt;
+      &lt;script src=&quot;bundle.js&quot;&gt;&lt;/script&gt;
+    &lt;/body&gt;
+  &lt;/html&gt;
+</code></pre>
+</span></div></div></div>
+
+<footer></footer>
+</body></html>

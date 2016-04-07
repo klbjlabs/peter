@@ -1,0 +1,58 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="main.css">
+  <title>摩登前端开发者</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="/favicon.png" type="image/x-icon">
+</head>
+
+<body>
+<header>
+  <div class="post-nav clearfix">
+    <ul class="container clearfix">
+      <li><a href="/" class="nav">网站首页</a></li>
+      <li><a href="/p/index" class="nav">课程首页</a></li>
+      <li><a href="/p/stage4" class="nav">S4</a></li>
+    </ul>
+  </div>
+</header>
+<div class="container">
+  <video id="peter-talk" controls preload="auto">
+   <source src="http://7xn2cy.com1.z0.glb.clouddn.com/render-blog.mp4" type='video/mp4' />
+  </video>
+</div>
+
+<div class="container">
+    <h1 id="-">渲染博客内容</h1>
+<p>我们的 private 文件夹中的博客会用 markdown 格式来写，要让它能在页面上美观的展示出来，有两个任务：第一，把 markdown 转换成 html ；第二，给代码添加高亮。怎么弄？本节揭晓。</p>
+<h3 id="markdown-html">Markdown 转 html</h3>
+<p>现在面临的最大任务是把博客转化为 html 格式。这个过程我们需要借助著名的 <a href="https://www.npmjs.com/package/marked">marked</a> 这个 npm 包的帮助。 packages.json 中添加一下包名和版本，运行 meteor 命令把它装上，然后到 app.browserify.js 中添加 require 语句，这样就可以使用包里面提供的接口了。</p>
+<p>代码如下：</p>
+<p><a href="https://github.com/happypeter/meteor-react/commit/2d64544469c6c8bb3ac6e4b6ae6cd278934508c8">marked</a></p>
+<p>参照代码可以看到，<code>marked</code> 接口会把 markdown 格式的 <code>post</code> 内容转化成 html 格式的字符串。但是 html 字符串直接插入页面中会有被 <a href="https://en.wikipedia.org/wiki/Cross-site_scripting">XSS 攻击</a>的风险。<code>{sanitize: true}</code> 和 <code>dangerouslySetInnerHTML</code> 配合使用是为了防范 XSS 攻击。 详情可以参考 <code>dangerouslySetInnerHTML</code> 的<a href="https://facebook.github.io/react/tips/dangerously-set-inner-html.html">说明文档</a> ，建议不必深究。</p>
+<h3 id="-">添加代码高亮</h3>
+<p>markdown 的语法格式参考 <a href="https://help.github.com/articles/github-flavored-markdown/">Github 的 Markdown 语法</a> 。对应代码高亮部分的语法，写成下面这样，把代码用三个导引号包裹起来。</p>
+<pre><code>```
+code
+```
+</code></pre><p>如何让代码显示的适合带高亮呢？这个需要使用 <a href="https://www.npmjs.com/package/highlight.js">highlight.js</a> 这个 npm 包（ 注意  highlight.js 可以自动识别代码的语言类型，所以上面不必注明代码的语言类型）。依旧是到 packages.json 中添加一下包名和版本，运行 meteor 命令把它装上，然后到 app.browserify.js 中添加</p>
+<pre><code>hljs = require(&quot;highlight.js&quot;);
+</code></pre><p>如何使用这个包呢？需要配置一下 marked 的选项，让 marked 来调用它。参考文档在<a href="https://github.com/chjj/marked">这里</a> ，参考官方给的代码，添加下面的设置：</p>
+<pre><code>marked.setOptions({
+  highlight: function (code) {
+    return hljs.highlightAuto(code).value;
+  }
+});
+</code></pre><p>经过上面的 highlight 配置之后，marked 导出的 html 中，代码中包含的关键字就会被合适的高亮标签所包裹的。然后配合添加 <code>client/stylesheets/vendor/highlight.css</code> 这个文件（从官方的 github 仓库下载的，<a href="https://github.com/isagalaev/highlight.js/blob/master/src/styles/railscasts.css">原始链接</a>），页面上的代码高亮就显示出来了。</p>
+<p>最终实现代码：</p>
+<p><a href="https://github.com/happypeter/meteor-react/commit/5c799b26938eccf1aabbd69d729a549a956ef0fa">highlight.js</a></p>
+<h3 id="-">结语</h3>
+<p>博客中也可以使用图片，推荐可以用一个第三方的 CDN 服务来做图床，然后 markdown 文件中这样写</p>
+<pre><code>![](http://cdn.example.com/hello.jpg)
+</code></pre><p>就可以成功使用图片了。</p>
+
+</div>
+
+<footer></footer>
+</body></html>

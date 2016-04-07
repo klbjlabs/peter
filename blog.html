@@ -1,0 +1,62 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="main.css">
+  <title>摩登前端开发者</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="/favicon.png" type="image/x-icon">
+</head>
+
+<body>
+<header>
+  <div class="post-nav clearfix">
+    <ul class="container clearfix">
+      <li><a href="/" class="nav">网站首页</a></li>
+      <li><a href="/p/index" class="nav">课程首页</a></li>
+      <li><a href="/p/stage4" class="nav">S4</a></li>
+    </ul>
+  </div>
+</header>
+<div class="container">
+  <video id="peter-talk" controls preload="auto">
+   <source src="http://7xn2cy.com1.z0.glb.clouddn.com/blog.mp4" type='video/mp4' />
+  </video>
+</div>
+
+<div class="container">
+    <h1 id="-">添加博客页面</h1>
+<p>本节添加博客相关的功能。所涉及到的代码中依然会生动的引入一些 React 和 Meteor 的基础知识点进来。</p>
+<h3 id="-">添加博客列表</h3>
+<p>在 <code>/blog</code> 对应的页面上，来添加一个博客列表，代码如下：</p>
+<p><a href="https://github.com/happypeter/meteor-react/commit/f50d9e8110f97f8b1046e1c823390abead86dcbb">blog index</a></p>
+<p>博客数据后续会从 server 端取得的，但是暂时为了演示就在 <code>getInitialState</code> 中来随便填写一些博客数据了。然后把这些数据作为一个 prop 传递给 BlogList.jsx 。在这个文件中 <code>_.map</code> 接口来自于 meteor 默认就会为我们安装的 <a href="http://underscorejs.org/">underscore.js</a> （参考 .meteor/versions 文件中的已安装的包列表）。</p>
+<p>注意 BlogList.jsx 中每个博客标题的链接是</p>
+<pre><code>       &lt;Link to={`/blog/${post.post_name}`}&gt;
+</code></pre><p>暂时打不开，后面我们需要来来添加对应的 route 项目。</p>
+<h3 id="-">博客展示页面</h3>
+<p>如果点击一个博客条目，访问 <code>/blog/1-beauty</code> 链接，我们应该能够看到博客展示页面，这部分中我们就来添加。代码如下：</p>
+<p><a href="https://github.com/happypeter/meteor-react/commit/ba0d519f677e6e1fb96d0348a5332c9efa00ee61">blog show</a></p>
+<p>首先添加了对应的路由，然后是对应的博客展示页面组件 Post.jsx ，里面数据同样也是暂时伪造一下。</p>
+<h3 id="-">取消活跃状态</h3>
+<p>现在有一个小问题，就是当打开博客展示页面之后，我们希望取消导航栏上的 Blog 一项的活跃状态。可以通过添加下面的代码来达成：</p>
+<p><a href="https://github.com/happypeter/meteor-react/commit/8a8df9d13a4724658d77be39a518d99500ded52d">set state</a></p>
+<pre><code>  componentWillReceiveProps(nextProps, nextContext) {
+    this.setState({
+      tabIndex: this._getSelectedIndex()
+    });
+  },
+</code></pre><p>有了上面这个函数，每当我们点击一个 Blog 条目，也就是打开一篇博客的展示页面的时候，此时链接为类似这样的格式 <code>/blog/1-beauty</code> ，这样 <code>_getSelectedIndex</code> 函数运算结果为 0 ，导航栏 <code>Blog</code> 一项下面的蓝色下划线就会消失了。</p>
+<p>前面咱们使用过 <code>componentWillMount</code> 这里用的是 <code>componentWillReceiveProps</code> 它们二者都属于 React 的 <a href="https://facebook.github.io/react/docs/component-specs.html">Lifecycle Methods</a> 。二者的区别是：<code>componentWillMount</code> 只是在组建最初加载的时候执行一次，所以后面如果页面不刷新，一般是不会触发这个方法的。而 <code>componentWillReceiveProps</code> 故名思议，就是每次组建接受到了新的属性值就会触发一次。在这里，每次打开一个新的链接 App 组件的 <code>this.props.children</code> 都会变一下，所以会触发 <code>componentWillReceiveProps</code>。</p>
+<h3 id="-sass">使用 Sass</h3>
+<p>到这里，基本功能就都有了，下面来添加一些样式进来。除了可以用 inline style 来设置样式，也可以用 Sass 给 React 组件设置样式的。</p>
+<p>meteor 中使用 sass 很简单，添加一个包：</p>
+<pre><code>meteor add fourseven:scss
+</code></pre><p>然后就可以用 sass 了，代码如下</p>
+<p><a href="https://github.com/happypeter/meteor-react/commit/ea5bbe0b0cd9d1620a0d0bddaabcc8ca83cc9f0c">use sass</a></p>
+<h3 id="-">结语</h3>
+<p>这样，基本的博客展示功能就有了。</p>
+
+</div>
+
+<footer></footer>
+</body></html>

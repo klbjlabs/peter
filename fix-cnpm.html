@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>摩登前端开发者</title>
+  <link rel="stylesheet" href="main.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+<header>
+  <div class="post-nav clearfix">
+    <ul class="container clearfix">
+      <li><a href="/" class="nav">网站首页</a></li>
+      <li><a href="/p/index" class="nav">课程首页</a></li>
+      <li><a href="/p/stage2" class="nav">S2</a></li>
+    </ul>
+  </div>
+</header>
+<div class="container">
+  <video id="peter-talk" controls preload="auto">
+   <source src="http://7xn2cy.com1.z0.glb.clouddn.com/fix-cnpm.mp4" type='video/mp4' />
+  </video>
+
+<h1>修正：cnpm 配置</h1>
+
+<p>这样的一行内容：</p>
+
+<pre><code>prefix=~/.npm-global</code></pre>
+
+<p>前面的视频中我给写到 .zshrc 之中了，这样会导致项目内部安装 npm 包，也会装到 <code>~/.npm-global/</code>
+  这个文件夹里面。</p>
+
+<p>解决方法是，把上面的内容添加到 <code>~/.cnpmrc</code> 文件中。</p>
+
+</div>
+<footer></footer>
+</body>
+</html>

@@ -1,0 +1,51 @@
+
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="main.css">
+  <title>摩登前端开发者</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="/favicon.png" type="image/x-icon">
+</head>
+
+<body>
+<header>
+  <div class="post-nav clearfix">
+    <ul class="container clearfix">
+      <li><a href="/" class="nav">网站首页</a></li>
+      <li><a href="/p/index" class="nav">课程首页</a></li>
+      <li><a href="/p/stage3" class="nav">S3</a></li>
+    </ul>
+  </div>
+</header>
+
+<div class="container">
+  <video id="peter-talk" controls preload="auto">
+   <source src="http://7xn2cy.com1.z0.glb.clouddn.com/meteor-mui-tabs.mp4" type='video/mp4' />
+  </video>
+</div>
+
+<div class="container">
+    <h1 id="-material-ui-tabs-">使用 material-ui 的 tabs 组件制作导航栏</h1>
+<p>本节来用 material-ui 的 tabs 组件，美化项目的导航栏。也会介绍 meteor 中如何使用 SASS 来做 CSS 预处理。</p>
+<h3 id="-">所有代码</h3>
+<p><a href="">meteor mui tabs</a></p>
+<h3 id="-sass-">添加 Sass 支持</h3>
+<p>需要安装 <a href="https://github.com/fourseven/meteor-scss">meteor-scss</a> 这个包。</p>
+<p>有意思的是，meteor 对于我们的各个 xxx.scss 文件叫什么名字和父文件夹的名字都没用硬性规定，只要所有内容都可以在 client/ 中找到就可以。</p>
+<h3 id="-">添加导航栏</h3>
+<p>需要使用 react-router 提供的 router 对象。在 meteor 这里，比第二阶段中的 es6 语法简单了些，不需要在 constructor 中传入参数了</p>
+<pre><code>constructor(props, context){
+  super(props, context)
+}
+</code></pre><p>只需要</p>
+<pre><code>contextTypes: {
+  router: React.PropTypes.object.isRequired
+},
+</code></pre><h3 id="-">如何放置图片</h3>
+<p><a href="http://docs.meteor.com/#/full/structuringyourapp">如何组织我们的项目</a></p>
+
+</div>
+
+<footer></footer>
+</body></html>

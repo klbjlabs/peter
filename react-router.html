@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>摩登前端开发者</title>
+  <link rel="stylesheet" href="main.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+<header>
+  <div class="post-nav clearfix">
+    <ul class="container clearfix">
+      <li><a href="/" class="nav">网站首页</a></li>
+      <li><a href="/p/index" class="nav">课程首页</a></li>
+      <li><a href="/p/stage2" class="nav">S2</a></li>
+    </ul>
+  </div>
+</header>
+<div class="container">
+  <video id="peter-talk" controls preload="auto">
+   <source src="http://7xn2cy.com1.z0.glb.clouddn.com/react-router.mp4" type='video/mp4' />
+  </video>
+</div>
+
+<div class="container">
+    <h1 id="-react-router-">使用 react-router 实现“多页面”的单页面应用</h1>
+<p>SPA 应用开发的一个挑战就是，怎么样给让单页面应用上看起来是有“多个页面”的。这个涉及到的就是“路由控制”（ route ）的问题。本节咱们来通过 <a href="https://github.com/rackt/react-router">react-router</a> 来实现路由功能。</p>
+<h3 id="-">全部代码</h3>
+<p><a href="https://github.com/happypeter/react-transform-boilerplate/commit/153edae4d99322be03d97e0a989fdea594c98951">react router</a></p>
+<h3 id="-react-router">安装 react-router</h3>
+<pre><code>cnpm i -D react-router@^2.0.0-rc4
+</code></pre><h3 id="-context-router">使用 context.router</h3>
+<p><a href="https://facebook.github.io/react/docs/context.html">React 提供了 context</a> 功能，用来很方便的在组件之间传递数据。如果要在 <a href="https://github.com/rackt/react-router/issues/1059">ES6 语法中使用 context</a>，需要下面的格式：</p>
+<pre><code>...
+class NavBar extends Component {
+  constructor(props, context) {
+    super(props, context);
+  }
+}
+...
+NavBar.contextTypes = {
+    router: React.PropTypes.object.isRequired
+};
+...
+</code></pre><p>上面的 <a href="https://github.com/rackt/react-router/issues/2646#context-router">router</a> 是 react-router 提供的。</p>
+<h3 id="-h5-pushstate-">使用 H5 的 pushstate() 接口</h3>
+<p>较老版本的 react-router 中要实现挺麻烦的，需要安装 <a href="https://www.npmjs.com/package/history">history</a> 这个包，另外代码也比较啰嗦。从 react-router@2.0.0 开始变得简单了，一个 <a href="https://github.com/rackt/react-router/blob/latest/upgrade-guides/v2.0.0.md#using-browser-html5-pushstate-history">browserHistory</a> 就搞定了。</p>
+<h3 id="-">结语</h3>
+<p>这样就让单页面应用中看起来有了多个页面。</p>
+
+</div>
+
+<footer></footer>
+</body></html>

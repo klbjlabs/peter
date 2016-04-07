@@ -1,0 +1,70 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="main.css">
+  <title>摩登前端开发者</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="/favicon.png" type="image/x-icon">
+</head>
+
+<body>
+<header>
+  <div class="post-nav clearfix">
+    <ul class="container clearfix">
+      <li><a href="/" class="nav">网站首页</a></li>
+      <li><a href="/p/index" class="nav">课程首页</a></li>
+      <li><a href="/p/stage3" class="nav">S3</a></li>
+    </ul>
+  </div>
+</header>
+
+<div class="container">
+  <video id="peter-talk" controls preload="auto">
+   <source src="http://7xn2cy.com1.z0.glb.clouddn.com/router-v2.mp4" type='video/mp4' />
+  </video>
+</div>
+
+<div class="container">
+    <h1 id="-">添加路由</h1>
+<p>SPA 应用开发的一个挑战就是，怎么样给让单页面上看起来是有“多个页面”的。这个涉及到的就是“路由控制”（ route ）的问题。本节咱们来通过 <a href="https://github.com/rackt/react-router">react-router</a> 来实现路由功能。</p>
+<h3 id="-">全部代码</h3>
+<p><a href="https://github.com/happypeter/s3-meteor/commit/c097c50a5e313d161672227e4ab2aae97696919e">react router</a></p>
+<h3 id="-react-router">安装 react-router</h3>
+<p>更改 packages.json 文件，添加一行代码：</p>
+<pre><code>&quot;react-router&quot;: &quot;2.0.0-rc4&quot;
+</code></pre><p>注意版本号一定要是 2.0+ 的。回到命令行，运行 meteor 命令，安装 react-router 。</p>
+<h3 id="-react-router">使用 react-router</h3>
+<p>更改 client/lib/app.browserify.js 文件</p>
+<pre><code>ReactRouter = require(&quot;react-router&quot;);
+browserHistory = require(&#39;react-router/lib/browserHistory&#39;);
+</code></pre><p>把 client/startup.jsx 文件，改为下面这样：</p>
+<pre><code>const {
+  Router,
+  Route,
+  IndexRoute
+} = ReactRouter;
+
+const Routes = (
+  &lt;Route path=&quot;/&quot; component={App}&gt;
+    &lt;Route path=&quot;home&quot; component={Home} /&gt;
+    &lt;Route path=&quot;signup&quot; component={SignUp} /&gt;
+    &lt;Route path=&quot;login&quot; component={LogIn} /&gt;
+    &lt;IndexRoute component={Home} /&gt;
+  &lt;/Route&gt;
+);
+
+Meteor.startup(function() {
+  ReactDOM.render((
+    &lt;Router history={browserHistory}&gt;
+      {Routes}
+    &lt;/Router&gt;
+  ), document.getElementById(&quot;container&quot;));
+});
+</code></pre><p>创建需要的各个组件 App.jsx LogIn.jsx SignUp.jsx Home.jsx 就可以了。</p>
+<h3 id="-">结语</h3>
+<p>这样就让单页面应用中看起来有了多个页面。</p>
+
+</div>
+
+<footer></footer>
+</body></html>

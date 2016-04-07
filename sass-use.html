@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="main.css">
+  <title>摩登前端开发者</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+<header>
+  <div class="post-nav clearfix">
+    <ul class="container clearfix">
+      <li><a href="/" class="nav">网站首页</a></li>
+      <li><a href="/p/index" class="nav">课程首页</a></li>
+      <li><a href="/p/stage1" class="nav">S1</a></li>
+    </ul>
+  </div>
+</header>
+
+<div class="container">
+  <video id="peter-talk" controls preload="auto">
+   <source src="http://7xn2cy.com1.z0.glb.clouddn.com/sass-use.mp4" type='video/mp4' />
+  </video>
+</div>
+
+<div class="container">
+    <h1 id="sass-">sass 的三大作用</h1>
+<p>Sass 是目前前端高手的标配，为何 Sass 如此流行呢？我觉得有下面三大技巧会让人觉得相见恨晚。</p>
+<h3 id="-">必备三大技巧</h3>
+<p>sass 的功能挺多，我觉得最重要的有三个：</p>
+<ul>
+<li>第一，变量使用。</li>
+<li>第二，语句嵌套。</li>
+<li>第三，文件拆分。</li>
+</ul>
+<p>视频中有详细演示。另外，sass 还有 mixin 等其他功能，见 <a href="http://www.sass.hk/sass-course.html">sass 基本语法-中文参考资料</a> 。</p>
+<h3 id="-gulpfile-js">视频中用到的 gulpfile.js</h3>
+<p>代码如下：</p>
+<pre><code>var gulp = require(&#39;gulp&#39;);
+var sass = require(&#39;gulp-sass&#39;);
+
+gulp.task(&#39;sass&#39;, function(){
+  gulp.src(&#39;src/main.scss&#39;)
+      .pipe(sass())
+      .pipe(gulp.dest(&#39;dist/&#39;));
+});
+
+gulp.task(&#39;copy-assets&#39;, function(){
+  gulp.src(&#39;src/*.html&#39;)
+      .pipe(gulp.dest(&#39;dist/&#39;));
+});
+
+gulp.task(&#39;default&#39;, [&#39;sass&#39;, &#39;copy-assets&#39;]);
+</code></pre><h3 id="-">总结</h3>
+<p>会了上面这三招，sass 也就算基本学会了。</p>
+
+</div>
+
+<footer></footer>
+</body></html>

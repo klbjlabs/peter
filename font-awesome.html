@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="main.css">
+  <title>摩登前端开发者</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+<header>
+  <div class="post-nav clearfix">
+    <ul class="container clearfix">
+      <li><a href="/" class="nav">网站首页</a></li>
+      <li><a href="/p/index" class="nav">课程首页</a></li>
+      <li><a href="/p/stage1" class="nav">S1</a></li>
+    </ul>
+  </div>
+</header>
+<div class="container">
+  <video id="peter-talk" controls preload="auto">
+   <source src="http://7xn2cy.com1.z0.glb.clouddn.com/font-awesome.mp4" type='video/mp4' />
+  </video>
+</div>
+
+<div class="container">
+    <h1 id="-font-awesome-">使用 font-awesome 图标</h1>
+<p>来给 header 和 footer 中添加图标。</p>
+<h3 id="-">所有代码</h3>
+<p><a href="https://github.com/happypeter/flex/commit/e99a2252e57a5dd253338b4dd1cd4d368988e1ae">font-awesome</a></p>
+<h3 id="font-awesome">font-awesome</h3>
+<p><a href="fontawesome.io">官网</a> 上的 CDN 加载太慢，所以使用国内提供的 CDN 吧，在 <a href="http://www.bootcss.com/p/font-awesome/">http://www.bootcss.com/p/font-awesome/</a> 。</p>
+<h3 id="flexbox-">flexbox 技巧</h3>
+<p>让各个 item 宽度统一，要用到</p>
+<pre><code>flex-grow: 1;
+</code></pre><p>也用到了 flex-shrink 和 align-item 的技巧，详细讲解可以参考 <a href="http://flexbox.io">http://flexbox.io</a> 的内容。</p>
+<h3 id="gulp-sass-handleerror">gulp sass 任务 handleError</h3>
+<p>代码如下</p>
+<pre><code>function handleError(err) {
+  console.log(err.toString());
+  this.emit(&#39;end&#39;);
+}
+
+gulp.task(&#39;sass&#39;, function () {
+    return gulp.src(&#39;src/style/main.scss&#39;)
+        .pipe(sass()).on(&#39;error&#39;, handleError)
+...
+});
+</code></pre><p>有了上面这些内容，当我们不小心 scss 语句敲了一半的时候，误点了 save ，后台 gulp 就不至于死掉了。</p>
+
+</div>
+
+<footer></footer>
+</body></html>

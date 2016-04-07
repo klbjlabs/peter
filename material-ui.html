@@ -1,0 +1,93 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="main.css">
+  <title>摩登前端开发者</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="/favicon.png" type="image/x-icon">
+</head>
+
+<body>
+<header>
+  <div class="post-nav clearfix">
+    <ul class="container clearfix">
+      <li><a href="/" class="nav">网站首页</a></li>
+      <li><a href="/p/index" class="nav">课程首页</a></li>
+      <li><a href="/p/stage3" class="nav">S3</a></li>
+    </ul>
+  </div>
+</header>
+
+<div class="container">
+  <video id="peter-talk" controls preload="auto">
+   <source src="http://7xn2cy.com1.z0.glb.clouddn.com/material-ui.mp4" type='video/mp4' />
+  </video>
+</div>
+
+<div class="container">
+    <h1 id="-material-ui">使用 material-ui</h1>
+<p>至此，一个 meteor+react 的基本项目就跑起来了，我们可以定义自己的 react 组件来添加到项目中来。但幸运的是，网上有现成的 react 组件仓库可以用的，这就是 <a href="http://material-ui.com/">Material-ui</a> 。 Material-ui 是实现了 Google Material Design 风格的 React 组件库。本节来看看如何在 Meteor + React 的环境下使用它。</p>
+<p>下面所有操作的代码，都在这个 commit 中(需要自己动手写的代码，下面的讨论中都会提到，其他的代码都是自动生成的)：</p>
+<h3 id="-">全部代码</h3>
+<p><a href="https://github.com/happypeter/s3-meteor/commit/36328671f9217f9dfd5c5e3f2a6f1e7abf034176">material ui</a></p>
+<h3 id="npm-">npm 装包</h3>
+<p>有趣而且强大无比的一点是，meteor 项目中不但能使用 meteor 包（例如前面 <code>meteor add react</code> 中的 react 包），也可以使用原生的 npm 包。参考<a href="http://react-in-meteor.readthedocs.org/en/latest/client-npm/">这里</a>的说明。比如我们这儿要用 materil-ui ，就采用 npm 的形式来装包。</p>
+<p>后续操作按照 <a href="http://react-in-meteor.readthedocs.org/en/latest/client-npm/">http://react-in-meteor.readthedocs.org/en/latest/client-npm/</a> 。</p>
+<p>要在 Meteor 项目中使用原生的 npm 包，下面两个包是首先要装的（需要翻墙）：</p>
+<pre><code>meteor add meteorhacks:npm cosmos:browserify
+</code></pre><p>第一个 meteor 包 <code>npm</code> ，负责把原生的 npm 包添加到咱们的 meteor 应用中运行，后续的 packages.json 文件就是由这个包生成的。</p>
+<p>第二个 <code>browserify</code> 在客户端代码中提供了 require 的功能，这个后面是会到处都用到的，相关功能是后面的 app.browserify.js 文件。</p>
+<p>安装完成，运行一下 </p>
+<pre><code>$ meteor
+</code></pre><p>就可以生成一个 packages.json 文件（对，是有 s 的 )。</p>
+<p>我们需要在里面填写要安装的原生 npm 包（由 <a href="https://www.npmjs.com">https://www.npmjs.com</a> 提供）：</p>
+<pre><code>{
+  &quot;material-ui&quot;: &quot;0.14.0&quot;,
+  &quot;react-tap-event-plugin&quot;: &quot;0.2.1&quot;,
+  &quot;externalify&quot;: &quot;0.1.0&quot;
+}
+</code></pre><p>上面的版本号，都是我在 <a href="https://www.npmjs.com">https://www.npmjs.com</a> 上查到的当前最新版本号。</p>
+<p>特别注意：写好之后，不着急安装，先把后续的配置做好，然后再运行 <code>meteor</code> 命令安装。操作顺序不同，会有奇怪的错误出现：</p>
+<pre><code>Uncaught Error: Invariant Violation: addComponentAsRefTo(...)
+</code></pre><h3 id="-browserify">配置 browserify</h3>
+<p>目前，Meteor 不支持使用 require 语法加载模块，所以需要通过添加 cosmos:browserify 软件包支持的一个特殊文件，来实现这个功能。 在项目中创建一个目录 client/lib，进入到新建目录，创建一个文件名为 app.browserify.js。</p>
+<p>在这个新建的文件里面，你可以 require 任意已安装的 NPM 模块，这样可以把它导出成一个在本项目范围内全局使用的变量（意味着项目中的每一个 JavaScript 文件都能访问这个变量）。 例如，要使用 material-ui 模块，在 app.browserify.js 文件添加下面这几行代码：</p>
+<pre><code>var injectTapEventPlugin = require(&quot;react-tap-event-plugin&quot;);
+injectTapEventPlugin();
+mui = require(&#39;material-ui&#39;);
+</code></pre><p>其实最主要的就是最后一句啦。但是，为何要有 <code>injectTapEventPlugin</code> 相关的这两行代码呢？这个是临时的，加上就是了，不必深究，<a href="https://www.npmjs.com/package/material-ui">material-ui 官方的文档</a> 有说明。</p>
+<h3 id="-externalify">配置 externalify</h3>
+<p>我们的意图是让 material-ui 使用 meteor 的 react 包，而不是 npm 提供的 react 包，但是这个行为不是默认的，需要我们手动配置一个 Browserify 的 <code>transforms</code> 。步骤很简单，创建 client/lib/app.browserify.options.json 里面添加</p>
+<pre><code>{
+  &quot;transforms&quot;: {
+    &quot;externalify&quot;: {
+      &quot;global&quot;: true,
+      &quot;external&quot;: {
+        &quot;react&quot;: &quot;React.require&quot;
+      }
+    }
+  }
+}
+</code></pre><h3 id="-">执行装包</h3>
+<p>上面的各个配置都写好之后，运行</p>
+<pre><code>$ meteor
+</code></pre><p>来安装 material-ui 和 externalify 这两个包并加载相关设置。</p>
+<h3 id="-material-ui">使用 material-ui</h3>
+<p>把 Hello.jsx 改成下面这样</p>
+<pre><code>const { RaisedButton } = mui;
+Hello = React.createClass({
+  render(){
+    return (
+      &lt;div&gt;
+      &lt;RaisedButton label=&quot;Hello World&quot; /&gt;
+      &lt;/div&gt;
+    );
+  }
+});
+</code></pre><h3 id="-">结语</h3>
+<p>这样，在 <a href="http://localhost:3000/">http://localhost:3000/</a> 就可以看到来自 material-ui 的一个按钮了，鼠标点一下可以看到漂亮的波纹效果。</p>
+
+</div>
+
+<footer></footer>
+</body></html>

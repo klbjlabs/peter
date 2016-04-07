@@ -1,0 +1,45 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="main.css">
+  <title>摩登前端开发者</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="/favicon.png" type="image/x-icon">
+</head>
+
+<body>
+<header>
+  <div class="post-nav clearfix">
+    <ul class="container clearfix">
+      <li><a href="/" class="nav">网站首页</a></li>
+      <li><a href="/p/index" class="nav">课程首页</a></li>
+      <li><a href="/p/stage4" class="nav">S4</a></li>
+    </ul>
+  </div>
+</header>
+
+<div class="container">
+  <video id="peter-talk" controls preload="auto">
+   <source src="http://7xn2cy.com1.z0.glb.clouddn.com/read-data.mp4" type='video/mp4' />
+  </video>
+</div>
+
+<div class="container">
+    <h1 id="-">从服务器读数据</h1>
+<p>前面显示的博客数据是用假数据填充的，本节来实现用 Meteor 的接口从后台读数据。主要涉及到 Meteor 自身的一些使用技巧啦，很简单也很实用。</p>
+<h3 id="-">服务器上的数据存储格式</h3>
+<p>一种常见的做法是把数据存储在 MongoDB 中，但是我这里是以文本文件的形式来存储的。在项目根目录下创建一个文件夹，名字叫 <code>private</code> ，这个位置是 Meteor 要求的（参考<a href="http://docs.meteor.com/#/full/structuringyourapp">这里</a>的文档，搜 <code>private</code> ）。凡是放到这个文件夹中的数据，都可以很方便的用 Meteor 的 <a href="http://docs.meteor.com/#/full/assets_getText">Assets</a> API 读出。</p>
+<p>实际中，我会把 private 添加到 .gitignore 文件中忽略，目的是把项目代码和博客文章内容分离（可以把博客内容放到单独一个 git 仓库中进行版本控制和存储）。具体的数据存放格式参考下面的代码 commit 。主要就是一个 posts.json 文件，相当于博客的目录，另外就是 <code>1-blog-name.md</code> 这样来命名的一篇篇的博客文件了。</p>
+<p><a href="https://github.com/happypeter/meteor-react/commit/8e967da00cd285a9ac4a3062f7027ca758af3457">blog data format</a></p>
+<p>注意：上面的 commit 代码运行的时候，要把 blog-data 文件夹放到项目顶级目录下，并且重命名为 private 。后续操作基于项目中有 private 文件夹来做。</p>
+<h3 id="-">从服务器端请求博客内容</h3>
+<p>放在 private 中的数据，如果我们在客户端代码中不主动请求，数据是不会自动跑到客户端的。</p>
+<p><a href="https://github.com/happypeter/meteor-react/commit/7b21e54746d947f62f76cf8c34c9b70652581a93">read blog data</a></p>
+<p>上面的代码所做的事情主要就是把 Blog.jsx 和 Post.jsx 中的那些假数据清空，然后用 <code>componentWillMount()</code> 接口中的 <code>Meteor.call(&#39;/blog/getPost&#39;,</code> 来从服务器端读取真正的博客数据。 <code>Meteor.call</code> 的文档在<a href="http://docs.meteor.com/#/full/meteor_call">这里</a> 。被 Meteor.call 调用的这个 Method （ <code>/blog/getPost</code> ）是要执行在 server 端的，所以定义这个方法的文件也就必须放到 server 文件夹中。</p>
+<h3 id="-">结语</h3>
+<p>到这里，我们学会了从后台的数据文件中读取数据，用来在前端显示。后面博客也会添加评论功能，到时候可以看到 Meteor 下如何操作 MongoDB 。</p>
+
+</div>
+
+<footer></footer>
+</body></html>

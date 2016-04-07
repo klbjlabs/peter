@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="main.css">
+  <title>摩登前端开发者</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+<header>
+  <div class="post-nav clearfix">
+    <ul class="container clearfix">
+      <li><a href="/" class="nav">网站首页</a></li>
+      <li><a href="/p/index" class="nav">课程首页</a></li>
+      <li><a href="/p/stage1" class="nav">S1</a></li>
+    </ul>
+  </div>
+</header>
+
+<div class="container">
+  <video id="peter-talk" controls preload="auto">
+   <source src="http://7xn2cy.com1.z0.glb.clouddn.com/nodejs-how.mp4" type='video/mp4' />
+  </video>
+</div>
+
+
+<div class="container">
+    <h1 id="nodejs-">nodejs 为何学？如何学？</h1>
+<p>最近我见人就鼓吹：不管前端后端开发，先切换到 nodejs 再说，下面给点详细理由。</p>
+<h3 id="-nodejs-">为何要学 nodejs ？</h3>
+<p>首先咱们课程后面会用到的前端框架 react ，全栈框架 meteorjs ，这些都是要基于 nodejs 才能跑的。react 和 meteorjs 的强大，后面课程中我们专门再介绍。但是现在我想强力鼓吹的是两个东西：npm 和 gulp 。</p>
+<p>首先说 npm 。根据 <a href="https://nodejs.org/en/">nodejs 官网</a> 上的说法：npm 是世界上最大的开源库生态系统。那你可能会说，nodejs 不是主要是服务器端的功能吗？那 npm 装得那些库是不是主要用于后台功能呢？错！npm 目前已经成了前端开发的必备利器了，功能远远超越 bower 。忘掉 bower 吧，她已经是过去了。有了 npm ，前端的那些 js 包，想装哪个就装哪个，而且 npm 是有真正完整的依赖关系管理策略，保证你的那些包都会安排的井井有条。</p>
+<p>再说 gulp 。gulp 是要比 grunt 好一万倍的前端”构建系统“（ build system ）。有哪些功能？后面会有详细的演示，这里 Peter 只是想说，不用构建工具的前端开发者，还是生活在石器时代的。</p>
+<p>npm 和 gulp.js 也都是基于 nodejs ，所以，嗯，前端开发，也必须得先装上 node 再说。</p>
+<h3 id="-">如何学？</h3>
+<p>如果到网上搜一下 nodejs 的学习，会看到很多资料是关于 nodejs 基础知识的，包括：本地文件系统操作，非阻塞 IO 等这些基础知识，都是很革命性的理念呀。但是，除非你自己已经有非常丰富的编程知识了，我是不建议从基础开始学 nodejs 的，因为比较难。我推荐的思路巧合相反，从最简单表面化的应用开始学。当然，咱们课程中，就是按照这套思路来的。先学学用 npm 怎么装包，再写点简单的 gulp 脚本，在实际的前端开发中逐渐体会 node 带来的好处，培养一下感情。即使深入到了后端，我觉得也可以先从 meteorjs 这样的基于 nodejs 的框架开始入手学，会比较简单，容易见成效。</p>
+<h3 id="-">结语</h3>
+<p>好，就聊这些。</p>
+
+</div>
+<footer></footer>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="main.css">
+  <title>摩登前端开发者</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="/favicon.png" type="image/x-icon">
+</head>
+
+<body>
+<header>
+  <div class="post-nav clearfix">
+    <ul class="container clearfix">
+      <li><a href="/" class="nav">网站首页</a></li>
+      <li><a href="/p/index" class="nav">课程首页</a></li>
+      <li><a href="/p/stage4" class="nav">S4</a></li>
+    </ul>
+  </div>
+</header>
+<div class="container">
+  <video id="peter-talk" controls preload="auto">
+   <source src="http://7xn2cy.com1.z0.glb.clouddn.com/mui-nav.mp4" type='video/mp4' />
+  </video>
+</div>
+
+<div class="container">
+    <h1 id="-mui-tabs-">使用 MUI tabs 组件</h1>
+<p>本节来使用一个 Material UI （简称 MUI ）的组件，来制作咱们项目的导航栏。看看如何给组件传递参数，如何进行样式自定制，也会涉及到 React 的一点基础知识。Peter 发现通过使用 MUI 来学习 React 和 Material Design 的基础知识是个好方法，生动不枯燥。</p>
+<h3 id="-tabs-">加载 Tabs 组件</h3>
+<p>参考文档在这里 <a href="http://material-ui.com/#/components/tabs">http://material-ui.com/#/components/tabs</a> 。</p>
+<p>代码如下：</p>
+<p><a href="https://github.com/happypeter/meteor-react/commit/23af64394ab9b3efbc424fc9bbf6618900fddca9">basic tabs</a></p>
+<p>基本上代码是一目了然的。代码中的 <code>value</code> 值是用来选定这个 tab 所用的标号，后面马上就会用到，详细的说明上面给出的参考文档里都有。</p>
+<h3 id="-">设置路由</h3>
+<p>现在一个漂亮的导航栏就有了，但是目前最大的问题是路由不工作了。</p>
+<p>实现的代码如下：</p>
+<p><a href="https://github.com/happypeter/meteor-react/commit/09f8f4ecee44b3dde06dd8d010723a3c3d04ca02">add route</a></p>
+<p>来解释几个不好理解的点。</p>
+<pre><code>this.props.history.isActive(&#39;/home&#39;) ? &#39;1&#39; :
+</code></pre><p>上面这句用到的 <code>history</code> 接口来自 react-router 。文档在<a href="https://github.com/rackt/react-router/blob/master/docs/API.md#history-mixin">这里</a>，具体 <code>isActive</code> 接口的详细解释也有的。简单来讲，这句就是去读 url ，如果 url 中包含 <code>/home</code> 字样，那么 <code>isActive</code> 的返回值就为 true ，同时 <code>value</code> 值设为 1 ，这里的 value 值传递给 <code>&lt;Tabs&gt;</code> 组件，就会让相应 value 值的那个 tab 变为活跃状态。</p>
+<pre><code>  _handleTabsChange(value, e, tab) {
+    this.props.history.pushState(null, tab.props.route);
+    this.setState({tabIndex: this._getSelectedIndex()});
+  }
+</code></pre><p>上面这个函数也不太好明白。先说它在什么时候被触发吧，代码中有：</p>
+<pre><code> onChange={this._handleTabsChange}
+</code></pre><p>意味着有人点 Tab 的时候会复发这个函数（ <code>onChange</code> 的参考文档在<a href="http://material-ui.com/#/components/tabs">这里</a>的 &quot;Tabs Events&quot; 标题下面）。再来看参数和里面的语句对参数的使用，<code>tab.props.route</code> 会把被点击的那个 tab 中的 <code>route</code> 对应的值取出（e.g <code>/home</code> ，<code>/blog</code>）。<code>history.pushState</code> 接口得到这个值，用来改变链接指向了。</p>
+<p>接下来一行中的 <code>setState</code> 用来改变 Tabs 组件的 tabIndex 这个 state （ react 状态），tabIndex 变了，带来得结果就是活跃的 tab 项的改变。</p>
+<pre><code>  componentWillMount() {
+    this.setState({
+      tabIndex: this._getSelectedIndex()
+    });
+  };
+</code></pre><p>上面的 <code>componentWillMount</code> 是 react 的 <a href="https://facebook.github.io/react/docs/component-specs.html#lifecycle-methods">Lifecycle Methods</a>，当页面被渲染到页面显示之前会被执行到。比如我们现在的链接是 <code>/home</code> 那么此时如果刷新一下页面，这个函数中的语句就会被执行，从而把对应的那个 tab 置于活跃状态。</p>
+<h3 id="-">修改样式</h3>
+<p>上面的代码已经实现了最重要的功能，下面的这些代码都仅仅是为了自定制一下样式：</p>
+<p><a href="https://github.com/happypeter/meteor-react/commit/1776eca8b882c0dbaf5ce4a03ade99ee0e613654">change inline style</a></p>
+<p>对于 MUI 组件，虽然也能添加 calssName，但是优先级要低于 inline styles，若<a href="http://material-ui.com/#/customization/inline-styles">修改 MUI 组件的样式</a>，使用 <a href="https://facebook.github.io/react/tips/inline-styles.html">inline styles</a>。</p>
+<p>另外，上面的代码中添加了一个小组件 <code>Paper</code> ，作用就是给导航栏加上好看的阴影而已。Paper 组件参考<a href="http://material-ui.com/#/components/paper">这里</a>。</p>
+<h3 id="-">总结</h3>
+<p>上面介绍使用一个 Material UI 的一个较为复杂的组件，并且演示了如何进行简单的自定制样式。但是样式自定制，其实还包括<a href="http://material-ui.com/#/customization/themes">主题自定制的技巧</a> ，这个暂时我们还没有用到。</p>
+
+</div>
+
+<footer></footer>
+</body></html>

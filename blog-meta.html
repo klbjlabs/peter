@@ -1,0 +1,45 @@
+
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="main.css">
+  <title>摩登前端开发者</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="/favicon.png" type="image/x-icon">
+</head>
+
+<body>
+<header>
+  <div class="post-nav clearfix">
+    <ul class="container clearfix">
+      <li><a href="/" class="nav">网站首页</a></li>
+      <li><a href="/p/index" class="nav">课程首页</a></li>
+      <li><a href="/p/stage4" class="nav">S4</a></li>
+    </ul>
+  </div>
+</header>
+<div class="container">
+  <video id="peter-talk" controls preload="auto">
+   <source src="http://7xn2cy.com1.z0.glb.clouddn.com/blog-meta.mp4" type='video/mp4' />
+  </video>
+</div>
+
+<div class="container">
+    <h1 id="-hero">添加博客页面的 Hero</h1>
+<p>从 posts.json 文件中读取博客标题和发布日期，显示在博客展示页面上。</p>
+<h3 id="-">实现代码</h3>
+<p>通过下面这些代码就可以实现了：</p>
+<p><a href="https://github.com/happypeter/meteor-react/commit/e2d490f624c67adfb62d95148d81b10a5009cce2">blog meta</a></p>
+<h3 id="-">步骤解释</h3>
+<p>第一步，修改 methods.js 文件中的 <code>/blog/getPost</code> 方法，让每一篇博客的展示页面中也可以获得这篇博客的标题和日期信息：</p>
+<pre><code>var metaData = JSON.parse(posts)[postId - 1];
+</code></pre><p>第二步，到 Post.jsx 中拿到这些元数据（ metaData ），传递给 <code>&lt;PostHero /&gt;</code> 组件</p>
+<pre><code> &lt;PostHero metaData={this.state.metaData}/&gt;
+</code></pre><p>第三步，创建 PostHero.jsx 文件，其中定义 <code>&lt;PostHero /</code> 组件。</p>
+<h3 id="-">结语</h3>
+<p>一些普通的 js 的代码逻辑而已，没有太多新技巧要掌握。</p>
+
+</div>
+
+<footer></footer>
+</body></html>

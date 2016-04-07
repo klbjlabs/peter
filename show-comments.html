@@ -1,0 +1,67 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="main.css">
+  <title>摩登前端开发者</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="/favicon.png" type="image/x-icon">
+</head>
+
+<body>
+<header>
+  <div class="post-nav clearfix">
+    <ul class="container clearfix">
+      <li><a href="/" class="nav">网站首页</a></li>
+      <li><a href="/p/index" class="nav">课程首页</a></li>
+      <li><a href="/p/stage4" class="nav">S4</a></li>
+    </ul>
+  </div>
+</header>
+
+<div class="container">
+  <video id="peter-talk" controls preload="auto">
+   <source src="http://7xn2cy.com1.z0.glb.clouddn.com/show-comments.mp4" type='video/mp4' />
+  </video>
+</div>
+
+<div class="container">
+    <h1 id="-">显示评论</h1>
+<p>前面已经把评论数据存储到服务器了，这一节看如何在浏览器页面上显示出这些数据。会涉及到 websocket 长连接条件下，数据的发布和订阅技巧。</p>
+<p>代码如下：</p>
+<p><a href="https://github.com/happypeter/meteor-react/commit/fc3050bebb2490a0ba2d90bcdc973eab4ecdc995">show comments</a></p>
+<h3 id="-">禁用客户端读写服务器数据的权限</h3>
+<p>默认情况下，meteor 会安装两个包 autopublish 和 insecure ，这两个包的作用是保证开发者在开发的时候在浏览其中直接操作 server 端的 mongodb 中的数据。但是在产品环境下，这样肯定不安全，所以要去掉这两个包：</p>
+<pre><code>meteor remove autopublish insecure
+</code></pre><p>参考文档在<a href="http://docs.meteor.com/#/full/dataandsecurity">这里</a> 。</p>
+<h3 id="websocket-">websocket 下的数据传输</h3>
+<p>Meteor 是一个实时性框架，这个就是它最好玩的地方，获取数据的时候不是用普通 http 请求，也不是 ajax 请求，而是通过 <a href="https://www.meteor.com/ddp">DDP</a> 协议 。DDP 本质上就是客户端和服务器之间建立了基于 websocket 的长连接。而且，每次客户端或者服务器端任何一方数据有了变化，数据就会自动同步，注意是自动同步哦。</p>
+<p>所以，既然是自动，那么没有必要专门为数据发请求了，我们只是需要搭建起这条数据的管道。如何来做呢？简单一句话：server 端做一下数据发布，client 端来订阅一下就好了。</p>
+<p>发布数据，在  server/publish.js 中完成：</p>
+<pre><code>Meteor.publish(&#39;comments&#39;, function(postId) {
+  return Comments.find({postId: postId});
+});
+</code></pre><p>订阅数据，在 client/blog/Post.jsx 中</p>
+<pre><code>Meteor.subscribe(&quot;comments&quot;, postId);
+</code></pre><p>通道打通之后，react 组件就可以随时用下面这条语句</p>
+<pre><code>comments: Comments.find({}, {sort: {createdAt: 1}}).fetch(),
+</code></pre><p>来获取 comments 数据了。最终得到的数据通过 </p>
+<pre><code>&lt;CommentBox comments={this.data.comments} postId={postId} /&gt;
+</code></pre><p>来传递给组件来显示，这个数据传递过程涉及到 <a href="https://react-in-meteor.readthedocs.org/en/latest/meteor-data/">ReactMeteorData 这个 mixin</a> 使用。</p>
+<p>注意，上面得到的不是单纯的一组数据，而是一个随时可能更新的数据流。于是，Meteor 加上 React 真的是制作实时性应用的最轻便的解决方案。Meteor 的特性是，一旦服务器端数据有变化（例如我的朋友发了一条评论），那么我自己的浏览器这边也就自动的会收到数据（数据从我朋友的浏览器，经过 server 直接同步到了我的浏览器中），而同时 react 的特点是一旦组件的 state 数据有变化，那么组件会自动重新 render 的（类似于刷新）。所以，这样等于形成了一个“一根筋”的链条了。那么这个道理明白了，就可以理解，为啥在 meteor + react 条件下，实现一个评论功能，却自动就有了实时聊天的效果。                                      </p>
+<h3 id="-">显示头像</h3>
+<p>Gravatar.com 是一个头像托管服务，比如我在上面留下了我的头像和 email 地址。那么后续，在支持 gravatar 的评论页面，只要我留下我的 email ，头像就可以自动取出来。咱们的代码中就实现了这个功能，下面来看看到底怎么实现。</p>
+<p>首先要装包</p>
+<pre><code>meteor add jparker:gravatar
+</code></pre><p>client/comment/Comment.jsx 中再来添加对应的代码</p>
+<pre><code>getGravatar() {
+  let md5Hash = Gravatar.hash(this.props.email);
+  return url = `http://gravatar.com/avatar/${md5Hash}.png?s=512&amp;d=monsterid`
+},
+</code></pre><p>上面的方法还有个妙处，如果您没有 gravatar 账号，但是也留下了 email ，这样 gravatar 会生成一个头像给您。</p>
+<h3 id="-">结语</h3>
+<p>虽然只是一个评论显示功能，但是却给我们打开了一种做实时性应用的全新可能。原来在传统 web 框架下<a href="http://www.zhihu.com/question/37503039?utm_campaign=webshare&amp;utm_source=weibo&amp;utm_medium=zhihu">难死人</a>的实时功能，现在简单了。</p>
+
+</div>
+
+<footer></footer>
+</body></html>

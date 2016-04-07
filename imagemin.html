@@ -1,0 +1,57 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="main.css">
+  <title>摩登前端开发者</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+<header>
+  <div class="post-nav clearfix">
+    <ul class="container clearfix">
+      <li><a href="/" class="nav">网站首页</a></li>
+      <li><a href="/p/index" class="nav">课程首页</a></li>
+      <li><a href="/p/stage1" class="nav">S1</a></li>
+    </ul>
+  </div>
+</header>
+
+<div class="container">
+  <video id="peter-talk" controls preload="auto">
+   <source src="http://7xn2cy.com1.z0.glb.clouddn.com/imagemin.mp4" type='video/mp4' />
+  </video>
+</div>
+
+<div class="container">
+    <h1 id="-imagemin-">使用 imagemin 来压缩图片</h1>
+<p>图片压缩以前我都是不弄的，因为嫌麻烦。但是，用上 gulp 系统，现在压缩图片就是写几条语句自动化完成，所以“嫌麻烦”已经不能作为借口了。</p>
+<h3 id="-">装包</h3>
+<p>需要安装两个包，一个是 <a href="https://www.npmjs.com/package/gulp-imagemin">gulp-imagemin</a> ，另一个是 <a href="https://www.npmjs.com/package/imagemin-pngquant">imagemin-pngquant</a> 。</p>
+<pre><code>cnpm i -D  gulp-imagemin imagemin-pngquant
+</code></pre><h3 id="gulpfile-js-">gulpfile.js 内容</h3>
+<pre><code>...
+var imagemin = require(&#39;gulp-imagemin&#39;);
+var pngquant = require(&#39;imagemin-pngquant&#39;);
+
+gulp.task(&#39;imagemin&#39;, function(){
+  return gulp.src(&#39;src/images/*&#39;)
+    .pipe(imagemin({
+      progressive: true,
+      svgoPlugins: [{removeViewBox: false}],
+      use: [pngquant()]
+    }))
+    .pipe(gulp.dest(&#39;dist/images&#39;));
+});
+
+...
+</code></pre><h3 id="-">结语</h3>
+<p>差不多可以压掉一半，真是很棒！</p>
+
+</div>
+
+<footer></footer>
+</body></html>

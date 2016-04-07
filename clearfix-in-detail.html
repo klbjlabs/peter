@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>摩登前端开发者</title>
+  <link rel="stylesheet" href="main.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+<header>
+  <div class="post-nav clearfix">
+    <ul class="container clearfix">
+      <li><a href="/" class="nav">网站首页</a></li>
+      <li><a href="/p/index" class="nav">课程首页</a></li>
+      <li><a href="/p/stage1" class="nav">S1</a></li>
+    </ul>
+  </div>
+</header>
+
+
+<div class="container">
+  <video id="peter-talk" controls preload="auto">
+   <source src="http://7xn2cy.com1.z0.glb.clouddn.com/clearfix-in-detail.mp4" type='video/mp4' />
+  </video>
+</div>
+
+<div class="container">
+  <h1>Clearfix 详解</h1>
+
+  <p>
+    通过展示两个恼人的具体问题，以及它们各自的解决方案，来说清楚 clearfix 的原理。
+
+    <pre>
+      <code>
+.clearfix:before,
+.clearfix:after
+{
+ content: "   ";
+ display: table;
+}
+.clearfix:after {
+  clear: both;
+}
+      </code>
+    </pre>
+
+    更为详细的文字稿，在 <a href="http://haoduoshipin.com/v/166">好多视频网</a> 。
+  </p>
+</div>
+
+<footer></footer>
+</body>
+</html>

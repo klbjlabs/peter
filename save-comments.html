@@ -1,0 +1,67 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="main.css">
+  <title>摩登前端开发者</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="/favicon.png" type="image/x-icon">
+</head>
+
+<body>
+<header>
+  <div class="post-nav clearfix">
+    <ul class="container clearfix">
+      <li><a href="/" class="nav">网站首页</a></li>
+      <li><a href="/p/index" class="nav">课程首页</a></li>
+      <li><a href="/p/stage4" class="nav">S4</a></li>
+    </ul>
+  </div>
+</header>
+
+
+<div class="container">
+
+
+  <video id="peter-talk" controls preload="auto">
+   <source src="http://7xn2cy.com1.z0.glb.clouddn.com/save-comments.mp4" type='video/mp4' />
+  </video>
+</div>
+
+<div class="container">
+    <h1 id="-mongodb">保存评论到 MongoDB</h1>
+<p>从这一节开始我们给项目添加评论功能。本节先做一部分，达成的效果是，表单可以提交成功，同时数据库中可以把数据保存。</p>
+<p>全部的实现代码：</p>
+<p><a href="https://github.com/happypeter/meteor-react/commit/cbc2b607d39dfd5415fc496ebc1d72d243262be2">save comments</a></p>
+<p>下面来解释一下。</p>
+<h3 id="-">数据添加操作</h3>
+<p>代码中我觉得最值得一聊的一点是，<code>/comments/add</code> 这个方法的定义是在 <code>lib/comments.js</code> 文件中。根据 <a href="http://docs.meteor.com/#/full/structuringyourapp">meteor 文件结构规范</a> ，定义在 <code>lib</code> 文件夹（也就是既不在 client/ 也不在 server/ 中）中的内容会同时在 client 和 sever 端都执行一次，这个是为什么呢？</p>
+<p>有意思的是，Meteor 不同于传统框架的一个特点是它在<a href="https://www.meteor.com/mini-databases">客户端</a>和服务器端都有 MongoDB 数据库。执行数据库相关的操作，最好的做法是让代码同时在客户端和服务器上都执行一下。 详细原理可以参考<a href="https://www.meteor.com/tutorials/blaze/security-with-methods">官方教程</a>的 &quot;Optimistic UI&quot; 这一部分。</p>
+<h3 id="-">评论和博文的从属关系</h3>
+<p>一句话，评论从属于某一篇博文的体现是这条评论的存储记录中包含博文的 id 。</p>
+<p>client/blog/Post.jsx 中新添加的这些语句</p>
+<pre><code>getPostId() {
+  return this.props.params.postName.split(&#39;-&#39;)[0];
+},
+...
+let postId = parseInt(this.getPostId());
+...
+ &lt;CommentBox postId={postId} /&gt;
+</code></pre><p>都是为了把当前博文的 id 值从链接中取出，然后传递给表单，最后在  client/comment/CommentForm.jsx 文件中，博文的 id （也就是下面的 postId）会被和其他信息一起提交并存储到 Mongodb 中。</p>
+<pre><code>let postId = this.props.postId;
+</code></pre><h3 id="mongodb-">Mongodb 中查看数据</h3>
+<p>可以服务器端（也就是命令行）中运行下面的命令</p>
+<pre><code>meteor mongo
+use meteor
+show collections
+db.comments.find()
+</code></pre><p>来查看数据是否已经存储。从命令行输出，可以看到评论信息已经存储到 server 端了。</p>
+<p>不是说了前后端都有 mongodb 吗？那前端 chrome 开发者 console 中能看吗？可以的，运行</p>
+<pre><code>Comments.find().fetch()
+</code></pre><p>就可以看到数据在前端也存储了。</p>
+<h3 id="-">结语</h3>
+<p>Database Everywhere 是 meteor 的一个伟大发明（其他地方我还真没见过这种前后端都有数据库的，你呢？），这种机制可以让应用看起来实时性更强，这一点后面需要通过例子慢慢体会。</p>
+
+</div>
+
+<footer></footer>
+</body></html>

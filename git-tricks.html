@@ -1,0 +1,79 @@
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="main.css"><title>摩登前端开发者</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+
+<header>
+  <div class="post-nav clearfix">
+    <ul class="container clearfix">
+      <li><a href="/" class="nav">网站首页</a></li>
+      <li><a href="/p/index" class="nav">课程首页</a></li>
+      <li><a href="/p/stage1" class="nav">S1</a></li>
+    </ul>
+  </div>
+</header>
+
+<div class="container">
+
+<video id="peter-talk" style="margin: 0 auto" class="video-js vjs-default-skin"
+  controls preload="auto" width="800" height="500"
+  data-setup='{"example_option":true}'>
+ <source src="http://7xn2cy.com1.z0.glb.clouddn.com/git-tricks.mp4" type='video/mp4' />
+</video>
+
+
+<h1>
+git 使用技巧：小步快跑
+</h1>
+
+
+
+
+  <p>Peter 研究过的 git 技巧挺多，但是真正每天用到的技巧其实少的可怜。今天要分享的就是 Peter 每天调式 html 的时候每天都会敲很多遍的技巧。所有机器服务一个思想，总结起来八个字：小步快跑，方便回滚。具体涉及的技巧有设置别名加快操作，git diff/status 查看修改，回滚历史命令，用 rebase 的方式合并多个小版本成为一个大版本。</p>
+
+<h3>别名设置</h3>
+
+<p>Peter 的 .gitconfig 文件内容如下</p>
+
+<pre><code class="lang-init">[user]
+  name = Peter Wang
+  email = happypeter1983@gmail.com
+[core]
+  editor = vim
+[alias]
+  ci = commit -a -v
+  st = status -s
+  br = branch
+  throw = reset --hard HEAD
+  throwh = reset --hard HEAD^
+[color]
+  ui = true
+[push]
+  default = current
+</code></pre>
+
+
+<h3>项目回滚</h3>
+
+<p>采用 git throwh/throw 来扔掉不想要的修改</p>
+<p> git diff/status 随时查看都改动了什么内容。</p>
+
+
+<p>插一句，有不少朋友喜欢我的终端配色，具体怎么设置呢？参考<a href="http://haoduoshipin.com/v/103">好多视频网103期</a> 。</p>
+
+
+<h3>合并小版本</h3>
+
+
+<p>small commits 有利于 throw ，但是也必须要知道如何合并</p>
+
+<pre><code>$ git rebase -i HEAD~~</code></pre>
+
+</div>
+<footer></footer>
+</body></html>

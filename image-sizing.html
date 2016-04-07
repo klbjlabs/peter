@@ -1,0 +1,60 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="main.css">
+  <title>摩登前端开发者</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+<header>
+  <div class="post-nav clearfix">
+    <ul class="container clearfix">
+      <li><a href="/" class="nav">网站首页</a></li>
+      <li><a href="/p/index" class="nav">课程首页</a></li>
+      <li><a href="/p/stage1" class="nav">S1</a></li>
+    </ul>
+  </div>
+</header>
+
+
+<div class="container">
+
+  <video id="peter-talk" controls preload="auto">
+   <source src="http://7xn2cy.com1.z0.glb.clouddn.com/image-sizing.mp4" type='video/mp4' />
+  </video>
+
+<p>一张图片可以顶的上一千个字。创作网站其实就是在向观众倾诉。这次来分享一个实用的雕虫小技：如何去网上查找自己想要的图片，并且剪裁成需要的大小。</p>
+
+<h3 id="-google">找图用 google</h3>
+<p>第一步，找图片。我一般是用 google 的 images 这一项。</p>
+
+<p>如果要透明背景的图片，一般就在关键词后面加  &quot;png&quot; ，如果搜 svg 图，就加 &quot;svg&quot; ，我这里要小狗的卡通图片就搜 &quot;doggie cartoon&quot; 。</p>
+
+
+<p>图片上右击，“拷贝图片”，这样图片就进了剪切板了。</p>
+
+<h3 id="-photoshop-">用 Photoshop 进行图片尺寸调整</h3>
+
+<p>很有意思的是，Photoshop 对剪切板里图片的尺寸是有意识的。这样用 <em>File-&gt;New</em> 或者是 <strong>Command-N</strong> 可以来新建一张画布，默认的尺寸就正好是刚才拷贝的图片的尺寸。所以敲 <strong>Command-V</strong> 可以完美的粘贴到新建画布之上。</p>
+<p>下面先来调整图片尺寸，用快捷键 <strong>Option-Command-I</strong> ，或者等价的点击 <em>Images-&gt;ImageSize</em> 。这样可以来调整图片尺寸了。当然长宽比是不能变的，所以如果我们最终要的是 400x400 像素大小的图片，那么这一步处理完，我们很可能得到的图片是 400x389 的，那么下一步怎么办？</p>
+<h3 id="-">调整画布</h3>
+<p>图片调整的差不多了，还可以来调整一下画布大小。<em>Images-&gt;CanvasSize</em> 或者用快捷键 <strong>Option-Command-C</strong> 。这样最终把画布大小调整为 400x400 。这样导致的问题是，边沿有一部分背景是透明的。这样可以用吸管取到图片的背景色，然后用“ Paint Bucket Tool ” ，色桶工具来把透明的敌方补上颜色。</p>
+
+<p>这样，一张真正的 400x400 的图片就得到了</p>
+
+<h3 id="-">导出</h3>
+<p>如果是透明背景图片那没有选择就是 png 的后缀，但是如果不透明，那么最好用 jpeg 格式的，这样导出尺寸最小，效果也最好。保存，下一步选择图片质量，保存为中等，<code>6</code> 就可以了。</p>
+<h3 id="-">得到图片局部</h3>
+<p>也有很多时候，我想要的只是图片的某个局部，这样可以用 Mac 的截图功能来实现。打开图片，然后敲 <strong>Shift-Command-4</strong> 这样，看到鼠标变了样子，就可以来截取想要的图片部分了。</p>
+
+
+<p>后面可以把剪裁得到的这部分放到 Photoshop 中，做前面那样的图片尺寸调整处理。具体操作视频里面演示的更清楚一些。</p>
+<h3 id="-">结语</h3>
+<p>好，Peter 平时就是这样给自己的页面找图片的，如果您有什么好的的方法，欢迎分享给我。</p>
+
+
+</div>
+
+<footer></footer>
+</body></html>

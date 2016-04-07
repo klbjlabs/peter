@@ -1,0 +1,48 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="main.css">
+  <title>摩登前端开发者</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+<header>
+  <div class="post-nav clearfix">
+    <ul class="container clearfix">
+      <li><a href="/" class="nav">网站首页</a></li>
+      <li><a href="/p/index" class="nav">课程首页</a></li>
+      <li><a href="/p/stage2" class="nav">S2</a></li>
+    </ul>
+  </div>
+</header>
+
+<div class="container">
+  <video id="peter-talk" controls preload="auto">
+   <source src="http://7xn2cy.com1.z0.glb.clouddn.com/material-ui-tabs.mp4" type='video/mp4' />
+  </video>
+</div>
+
+<div class="container">
+    <h1 id="-material-ui-tabs-">使用 material-ui 的 Tabs 组件</h1>
+<p>这集来使用一下人家写的 React 组件库，<a href="http://www.material-ui.com/">Material UI</a> ，演示传人属性值和使用 inline style 来自定制样式的过程。</p>
+<h3 id="-">全部代码</h3>
+<p><a href="https://github.com/happypeter/react-transform-boilerplate/commit/43eeb6f697619f848b6db2de07ffd3f14f2013ef">material ui tabs</a></p>
+<h3 id="-tabs-">使用 Tabs 组件</h3>
+<p>基本过程就是，先 import 后使用。</p>
+<p>import 语句：</p>
+<pre><code>import Tabs from &#39;material-ui/lib/tabs/tabs&#39;;
+import Tab from &#39;material-ui/lib/tabs/tab&#39;;
+</code></pre><p>调用语句：</p>
+<pre><code>&lt;Tabs&gt;
+  &lt;Tab label=&#39;Home&#39;/&gt;
+  &lt;Tab label=&#39;Account&#39; /&gt;
+  &lt;Tab label=&#39;About&#39; /&gt;
+&lt;/Tabs&gt;
+</code></pre><h3 id="-tabs-">定制 Tabs 组件</h3>
+<p>使用组件其实就是要知道传人哪些属性给组件，可以在 <a href="http://www.material-ui.com/#/components/tabs">Material UI 文档的 Tabs</a> 这部分找到属性列表。</p>
+
+</div>
+
+<footer></footer>
+</body></html>

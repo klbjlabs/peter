@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>摩登前端开发者</title>
+  <link rel="stylesheet" href="main.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+<header>
+  <div class="post-nav clearfix">
+    <ul class="container clearfix">
+      <li><a href="/" class="nav">网站首页</a></li>
+      <li><a href="/p/index" class="nav">课程首页</a></li>
+      <li><a href="/p/stage3" class="nav">S3</a></li>
+    </ul>
+  </div>
+</header>
+
+<div class="container">
+  <video id="peter-talk" controls preload="auto">
+   <source src="http://7xn2cy.com1.z0.glb.clouddn.com/signup.mp4" type='video/mp4' />
+  </video>
+</div>
+
+<div class="container">
+    <h1 id="-">用户注册</h1>
+<p>Meteor 下用户 account 管理，会用到 <a href="https://atmospherejs.com/meteor/accounts-password">accounts-password</a> 这个包。本节里我们只是来实现用户登录功能。</p>
+<h3 id="-">所有代码</h3>
+<p><a href="https://github.com/happypeter/s3-meteor/commit/c4e64f92ba74ee167ba36cdd468dd00711de1020">signup</a></p>
+<h3 id="-">查看用户信息</h3>
+<p>查看已经注册过的用户，chrome 开发者 console 中运行：</p>
+<pre><code>Meteor.users.find().fetch()
+</code></pre><p>有意思的是，meteor 的数据是同时存在于客户端和服务器上的，那么服务器上如何来查看呢？切换到命令行终端，保持 meteor 命令运行的前提下，执行：</p>
+<pre><code>➜  s3-meteor git:(master) meteor mongo
+MongoDB shell version: 2.6.7
+connecting to: 127.0.0.1:3001/meteor
+meteor:PRIMARY&gt; show collections
+meteor_accounts_loginServiceConfiguration
+system.indexes
+users
+meteor:PRIMARY&gt; db.users.find()
+{ &quot;_id&quot; : &quot;zCAjqQaTRhvYYCFGQ&quot;, &quot;createdAt&quot; : ISODate(&quot;2016-01-11T03:11:40.431Z&quot;), &quot;services&quot; : { &quot;password&quot; : { &quot;bcrypt&quot; : &quot;$2a$10$2AjCzDbssggLpW/5PeCPfeCNF8eAAxJaQ/IxdEVnYkX/bwRMMa6mC&quot; }, &quot;resume&quot; : { &quot;loginTokens&quot; : [ ] } }, &quot;username&quot; : &quot;happypeter&quot; }
+</code></pre><h3 id="router-push-account-">router.push(&#39;/account&#39;)</h3>
+<p><a href="http://docs.meteor.com/#/full/accounts_createuser">callback 函数的参考文档</a> 写得不是特别清楚，可以直接参考 <a href="https://github.com/meteor/react-packages/blob/devel/examples/react-todos/client/components/accounts/AuthJoinPage.jsx#L51">官方给的参考代码</a> 。</p>
+<h3 id="-">体现登录状态</h3>
+<p><a href="http://docs.meteor.com/#/full/accounts_api">Meteor.user()</a> 如果取得的值不为空，就表示当前有用户处于登录状态。</p>
+<h3 id="logout-">logout 登出</h3>
+<p>logout 的功能我们后面再介绍，但是为了调试方便，咱们可以在 chrome 开发者 console 中，运行</p>
+<pre><code>Meteor.logout()
+</code></pre><p>就可以退出登录了。</p>
+
+</div>
+
+<footer></footer>
+</body></html>

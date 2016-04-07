@@ -1,0 +1,50 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="main.css">
+  <title>摩登前端开发者</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="/favicon.png" type="image/x-icon">
+</head>
+
+<body>
+<header>
+  <div class="post-nav clearfix">
+    <ul class="container clearfix">
+      <li><a href="/" class="nav">网站首页</a></li>
+      <li><a href="/p/index" class="nav">课程首页</a></li>
+      <li><a href="/p/stage2" class="nav">S2</a></li>
+    </ul>
+  </div>
+</header>
+<div class="container">
+  <video id="peter-talk" controls preload="auto">
+   <source src="http://7xn2cy.com1.z0.glb.clouddn.com/webpack-sass-loader.mp4" type='video/mp4' />
+  </video>
+</div>
+
+<div class="container">
+    <h1 id="-webpack-sass">使用 Webpack 来处理 sass</h1>
+<p>前面咱们用 gulp 来处理 sass 文件，这里来切换到 webpack 下实现相同的功能。</p>
+<h3 id="-">全部代码</h3>
+<p><a href="https://github.com/happypeter/react-transform-boilerplate/commit/4c0306d8e8573247d4e6400ebbdb2584e8c2e915">webpack sass loader</a></p>
+<h3 id="-loader">安装 loader</h3>
+<pre><code>$ cnpm i -D style-loader css-loader autoprefixer-loader sass-loader node-sass
+</code></pre><p>注意：-D 和 --save-dev 是等价的。</p>
+<h3 id="-">修改配置</h3>
+<p>然后到 webpack.config.js 来添加 loader 的配置</p>
+<pre><code>    module: {
+        loaders: [
+          { test: /\.scss$/, loader: &#39;style!css!autoprefixer!sass&#39; },
+        ]
+    }
+</code></pre><h3 id="-sass-">导入 sass 文件。</h3>
+<p>到 main.js 中把 main.scss 导入一下就可以了。现在我们用 <a href="http://es6.ruanyifeng.com/#docs/module">ES6 模块</a> ，用 import 就可以了 （ 原来按照 commonjs 格式，要用 require ）</p>
+<pre><code>import &#39;./style/main.scss&#39;;
+</code></pre><h3 id="-">结语</h3>
+<p>虽然 Peter 对 react 社区推行的 inline style 的理念完全支持，但是在相应的工具链成熟之前，sass 用用还是很方便的。</p>
+
+</div>
+
+<footer></footer>
+</body></html>
